@@ -100,9 +100,9 @@ Visible ≈192×128 u. Collision [P3 proposal]: circle r 40 u at pivot. Dependen
 
 Total: **36 frames**. Rejection: folded-telegraph silhouette not readable as a distinct shape; wings rigid across cruise; death that reads as gore.
 
-## 6. Stationary ranged threat + projectile — canvas 256×320 [P3], base pivot (128, 288) [P3]
+## 6. Stationary ranged threat + projectile — canvas 256×352, base pivot (128, 320)
 
-Visible ≈128×160 u, rooted. Collision [P3 proposal]: contact body 72×150 u at base. Dependencies: ART_BIBLE §4 (hooded bound figure; Grave Phosphor charge). Projectile speed 280 u/s, despawn 640 u (GAMEPLAY_RULES §8.3).
+Visible ≈128×160 u, rooted; figure height 300 px (150 u, matching the contact body). The canvas was 256×320 with the pivot at 288 in the first draft, which left 12 px too little headroom: the first implementation clipped the hood on every frame (contract-check now rejects any canvas that cannot hold its design height). Collision [P3 proposal]: contact body 72×150 u at base. Dependencies: ART_BIBLE §4 (hooded bound figure; Grave Phosphor charge). Projectile speed 280 u/s, despawn 640 u (GAMEPLAY_RULES §8.3).
 
 | Asset ID | Frames × durations (total) | Loop / hold | Events | Behavior ref |
 |---|---|---|---|---|

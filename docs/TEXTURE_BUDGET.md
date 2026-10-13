@@ -23,14 +23,16 @@
 | Boss (70 × 512²) | 18,350,080 | 70.00 | 0.45 | 8,257,536 |
 | Backgrounds sky + distant + midground (opaque) | 3,407,872 | 13.00 | 1.00 | 3,407,872 |
 | Background foreground framing | 524,288 | 2.00 | 0.25 | 131,072 |
-| Ranged threat (31 × 256×320) + projectile | 2,551,808 | 9.73 | 0.45/0.50 | 1,148,928 |
+| Ranged threat (31 × 256×352) + projectile | 2,805,760 | 10.70 | 0.45/0.50 | 1,263,206 |
 | Pursuer (46 × 320×192) | 2,826,240 | 10.78 | 0.45 | 1,271,808 |
 | Swooper (36 × 384×256) | 3,538,944 | 13.50 | 0.35 | 1,238,630 |
 | VFX set (itemized in ASSET_BRIEFS §11) | 2,097,152 | 8.00 | 0.30 | 629,146 |
 | UI set (itemized in ASSET_BRIEFS §10) | 286,720 | 1.09 | 0.60 | 172,032 |
 | Stage props (checkpoint, gate, exit, effigy) | 258,048 | 0.98 | 0.50 | 129,024 |
 | Terrain kit (14 × 128², opaque) | 229,376 | 0.88 | 1.00 | 229,376 |
-| **Total slice** | **73,129,984** | **278.97** | — | **26,917,683 (102.68 MiB)** |
+| **Total slice** | **73,383,936** | **279.94** | — | **27,031,961 (103.12 MiB)** |
+
+*2026-10-12:* the ranged canvas grew from 256×320 to 256×352 so its 300 px figure fits ([ASSET_BRIEFS.md](ASSET_BRIEFS.md) §6). The page readings below are unchanged: all-resident 31.80 M packed px → 8 pages, boss peak 27.36 M → 7, mixed peak 22.09 M → 6.
 
 ## 4. Readings against the 128 MiB budget
 

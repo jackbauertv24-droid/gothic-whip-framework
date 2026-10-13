@@ -65,7 +65,7 @@ Every frame of every character clip carries one pose class, given per clip in `a
 | `dissolve` | ash and settle frames at the end of a death | no band | no band | ±6 px | skip | — |
 | `creature` | non-humanoid locomotion and poses | per clip `height_band` | 0.88–1.12 | per actor alignment | skip | per actor |
 
-The head rule in `crouch` and `transition` compares against the **standing** head width. That is what makes "bend, don't shrink" (DA-3) a hard rule. A clip may narrow a band with a stated reason; widening one is a contract amendment recorded in [DECISIONS.md](DECISIONS.md).
+The head rule in `crouch` and `transition` compares against the **standing** head width. That is what makes "bend, don't shrink" (DA-3) a hard rule. A clip may override its height or size band in `art_contract.json` (for example the pursuer's rear-up tell, or folded wings that show less area), always with a note saying why. Loosening a band beyond what the pose needs is a contract amendment recorded in [DECISIONS.md](DECISIONS.md).
 
 ## 4. Per-frame rules (automated: `tools/audit-art.mjs`)
 
@@ -76,7 +76,7 @@ Each rule prints its ID on failure. A **DEFECT** blocks approval; a **FLAG** goe
 | A-01 | Frame exists, has the contract canvas size, is RGBA, and is not empty (some ink present) | DEFECT |
 | A-02 | Real transparency: all four corner pixels have alpha 0; no pixel of the key colour remains (G-04) | DEFECT |
 | A-03 | No figure ink within 2 px of the canvas edge (clipping), unless the clip declares `bleed` on that edge | DEFECT |
-| A-04 | No debris: every non-figure component with area ≥ 24 px is a declared satellite | DEFECT |
+| A-04 | No debris: no ink component of 24 px or more outside the figure. Frames of class `dissolve` may carry loose ash particles | DEFECT |
 | A-05 | Height in the frame's pose-class band | DEFECT |
 | A-06 | S in the frame's pose-class band against the actor's reference S | DEFECT |
 | A-07 | Lower body present in classes that require it: fails when boot ratio > 0.60 **and** leg dip > 0.50 | DEFECT |
@@ -112,8 +112,8 @@ Every attack body frame records a **hand socket** in source px. The whip frame w
 | ID | Rule | Severity |
 |---|---|---|
 | V-01 | No alpha on the canvas border ring (2 px): an effect never shows a rectangle edge | DEFECT |
-| V-02 | The anchor (centre or base, per brief) drifts ≤ 2 px across frames | DEFECT |
-| V-03 | Size curve: the ink diagonal rises to one peak, then falls (one wobble of ≤ 10% allowed). The peak is no larger than the brief's `max_extent_px` | DEFECT |
+| V-02 | The anchor stays put: the ink bounding box's centre (or bottom centre, for base-anchored effects) is within 4 px of the brief's anchor in every frame | DEFECT |
+| V-03 | Size curve: for one-shot bursts, the larger side of the ink bounding box rises to one peak, then falls (one wobble of ≤ 10% allowed). In every effect it never exceeds the brief's `max_extent_px` | DEFECT |
 | V-04 | Full-screen and screen-edge effects (vignettes, flashes, fades, the damage indicator) are **drawn in engine code**, never generated or chroma-keyed | DEFECT if delivered as art |
 
 ## 8. Generation and extraction requirements
