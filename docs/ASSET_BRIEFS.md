@@ -66,9 +66,9 @@ One clip per attack, synchronized frame-for-frame with §2; the whip root must m
 
 Whip total: **24 frames**. Rejection: root-to-socket gap visible in composite; whip reading as energy/glow (ART_BIBLE §3); extension visibly shorter than the hitbox overlay at active frames.
 
-## 4. Ground pursuer — canvas 320×192 [P3], ground pivot (128, 160) [P3]
+## 4. Ground pursuer — canvas 320×256, ground pivot (128, 224)
 
-Visible ≈160×96 u; body ≈56 u at shoulder (ART_BIBLE §4). Collision [P3 proposal]: contact body 96×52 u at ground origin, applied via GAMEPLAY_RULES §5 (contact = displacing hit; no stomp, D09 baseline). Dependencies: ART_BIBLE §4, approved `style_enemy_pursuer`.
+Visible ≈160×96 u; body ≈56 u at shoulder (ART_BIBLE §4). The canvas holds the `alert` rear-up tell at up to 1.6 × the 112 px patrol height; the first draft's 320×192 canvas could not, and the first implementation clipped those frames. Collision [P3 proposal]: contact body 96×52 u at ground origin, applied via GAMEPLAY_RULES §5 (contact = displacing hit; no stomp, D09 baseline). Dependencies: ART_BIBLE §4, approved `style_enemy_pursuer`.
 
 | Asset ID | Frames × durations (total) | Loop / hold | Events | Behavior ref |
 |---|---|---|---|---|
@@ -111,14 +111,14 @@ Visible ≈128×160 u, rooted; figure height 300 px (150 u, matching the contact
 | `ranged_fire` | 3 × [50,50,100] (200) | once | `projectile_spawn` at frame 1 | — |
 | `ranged_recover` | 7 × 100 ms (700) | once | — | 700 ms recovery |
 | `ranged_hurt` | 3 × 60 ms (180) | once | interrupts aim | — |
-| `ranged_death` | 6 × 80 ms (480) | hold final | slump + ash (D13) | 2 HP |
+| `ranged_death` | 6 × 80 ms (480) | hold final | slump + ash (D13); collapses in place against its post: a full-length fall does not fit the canvas | 2 HP |
 | `projectile_grave_shot` | 3 × 80 ms (240); canvas 64×64, center pivot (32, 32) | loop | despawn at 640 u | band y −70..−95 over firer's ground |
 
 Totals: **31 + 3 frames**. Rejection: projectile reading as a bullet/sphere (must be the phosphor diamond, ART_BIBLE §4); charge cue color-only without the shape cue; figure static in idle.
 
-## 7. Boss — canvas 512×512 [P3], foot pivot (176, 448) [P3]
+## 7. Boss — canvas 512×576, foot pivot (176, 512)
 
-Visible ≈256×256 u; figure ≈176 u tall [P3, from ART_BIBLE §4]. Collision [P3 proposal]: body 120×176 u at foot origin; strike danger zone ≈100 u forward during `boss_strike_execute` (GAMEPLAY_RULES §8.4). Dependencies: ART_BIBLE §4; hazard clips synchronize with §11 VFX.
+Visible ≈256×288 u; figure ≈176 u tall [P3, from ART_BIBLE §4]. The canvas holds the wind-up tell, in which the striking arm raises the silhouette to about 1.4 × the standing height; the first draft's 512×512 canvas could not, and the first implementation clipped boss frames at 448 px. Collision [P3 proposal]: body 120×176 u at foot origin; strike danger zone ≈100 u forward during `boss_strike_execute` (GAMEPLAY_RULES §8.4). Dependencies: ART_BIBLE §4; hazard clips synchronize with §11 VFX.
 
 | Asset ID | Frames × durations (total) | Loop / hold | Events | Behavior ref |
 |---|---|---|---|---|
@@ -132,7 +132,7 @@ Visible ≈256×256 u; figure ≈176 u tall [P3, from ART_BIBLE §4]. Collision 
 | `boss_hazard_execute` | 4 × 100 ms (400) | once | sync `vfx_hazard_eruption` | 400 ms eruption ≤46 u |
 | `boss_hazard_recover` | 6 × 150 ms (900) [P3] | once | — | — |
 | `boss_hurt` | 3 × [70,70,60] (200) | once | does not interrupt a live strike | 200 ms flinch |
-| `boss_death` | 12 × 90 ms (1080) | hold final | plate settles → ash gutter (D13); triggers exit unlock | 8 HP |
+| `boss_death` | 12 × 90 ms (1080) | hold final | plate settles → ash gutter (D13), collapsing downward in place (a full-length fall does not fit the canvas); triggers exit unlock | 8 HP |
 
 Total: **70 frames**. Rejection: wind-up indistinguishable from idle at phone size; hazard ring not the stage's only floor-level warm signal (ART_BIBLE §4); any gore in death.
 

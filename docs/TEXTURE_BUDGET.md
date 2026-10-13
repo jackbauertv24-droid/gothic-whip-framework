@@ -20,19 +20,19 @@
 |---|---:|---:|---:|---:|
 | Hero body (113 × 512²) | 29,622,272 | 113.00 | 0.30 | 8,886,682 |
 | Hero whip (24 × 768×512) | 9,437,184 | 36.00 | 0.15 | 1,415,578 |
-| Boss (70 × 512²) | 18,350,080 | 70.00 | 0.45 | 8,257,536 |
+| Boss (70 × 512×576) | 20,643,840 | 78.75 | 0.45 | 9,289,728 |
 | Backgrounds sky + distant + midground (opaque) | 3,407,872 | 13.00 | 1.00 | 3,407,872 |
 | Background foreground framing | 524,288 | 2.00 | 0.25 | 131,072 |
 | Ranged threat (31 × 256×352) + projectile | 2,805,760 | 10.70 | 0.45/0.50 | 1,263,206 |
-| Pursuer (46 × 320×192) | 2,826,240 | 10.78 | 0.45 | 1,271,808 |
+| Pursuer (46 × 320×256) | 3,768,320 | 14.38 | 0.45 | 1,695,744 |
 | Swooper (36 × 384×256) | 3,538,944 | 13.50 | 0.35 | 1,238,630 |
 | VFX set (itemized in ASSET_BRIEFS §11) | 2,097,152 | 8.00 | 0.30 | 629,146 |
 | UI set (itemized in ASSET_BRIEFS §10) | 286,720 | 1.09 | 0.60 | 172,032 |
 | Stage props (checkpoint, gate, exit, effigy) | 258,048 | 0.98 | 0.50 | 129,024 |
 | Terrain kit (14 × 128², opaque) | 229,376 | 0.88 | 1.00 | 229,376 |
-| **Total slice** | **73,383,936** | **279.94** | — | **27,031,961 (103.12 MiB)** |
+| **Total slice** | **76,619,776** | **292.28** | — | **28,488,090 (108.67 MiB)** |
 
-*2026-10-12:* the ranged canvas grew from 256×320 to 256×352 so its 300 px figure fits ([ASSET_BRIEFS.md](ASSET_BRIEFS.md) §6). The page readings below are unchanged: all-resident 31.80 M packed px → 8 pages, boss peak 27.36 M → 7, mixed peak 22.09 M → 6.
+*2026-10-12:* three canvases grew so that every height the art contract allows fits without clipping (`tools/contract-check.mjs` now enforces this): ranged 256×320 → 256×352, pursuer 320×192 → 320×256, boss 512×512 → 512×576. All three were clipped in the first implementation. The page readings below are unchanged: all-resident 33.52 M packed px → 8 pages (7.99, no slack), boss peak 28.58 M → 7, mixed peak 22.59 M → 6. **Measured evidence:** the first implementation, after its scale fixes, packed its full 357-frame inventory into 5 pages / 80 MiB with mips off. Real trims were better than the estimates here, but that was one art set, so the estimates stand as the planning bound.
 
 ## 4. Readings against the 128 MiB budget
 

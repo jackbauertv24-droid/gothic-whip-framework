@@ -7,7 +7,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadContract, classOf, canvasOf } from './lib/contract.mjs';
+import { loadContract, classOf, canvasOf, heightBand } from './lib/contract.mjs';
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (name, dflt) => {
@@ -58,6 +58,20 @@ for (const [name, a] of Object.entries(c.actors)) {
   if (a.align === 'feet' && a.design_height > a.pivot[1]) bad(`actor ${name}: design height ${a.design_height} does not fit above the pivot`);
 }
 if (c.whip.pivot.join() !== c.actors.hero.pivot.join()) bad('whip pivot must equal hero pivot (hand sockets are shared coordinates)');
+
+// Every height a clip is allowed to reach must fit on its canvas, or the art is clipped
+// by construction (the first implementation clipped the pursuer's rear-up and boss frames).
+for (const [id, s] of Object.entries(c.clips)) {
+  const a = c.actors[s.actor];
+  if (!a) continue;
+  const room = a.align === 'feet'
+    ? a.pivot[1] - c.measurement.edge_px
+    : 2 * Math.min(a.pivot[1], a.canvas[1] - 1 - a.pivot[1]) - 2 * c.measurement.edge_px;
+  for (let i = 0; i < s.ms.length; i++) {
+    const band = heightBand(c, id, i);
+    if (band && band[1] > room) { bad(`${id} f${i}: allowed height ${band[1].toFixed(0)} px does not fit the canvas (${room} px of room)`); break; }
+  }
+}
 
 // ---- cross-check against ASSET_BRIEFS.md ----
 // Rows look like: | `hero_idle` | 8 × 125 ms (1000) | ...

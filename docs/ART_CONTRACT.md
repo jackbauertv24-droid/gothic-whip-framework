@@ -56,10 +56,10 @@ Every frame of every character clip carries one pose class, given per clip in `a
 |---|---|---|---|---|---|---|
 | `stand` | idle, turn neutral, hurt recoil | 0.97–1.03 | 0.92–1.08 | ±2 px | yes, ±5% | required |
 | `stride` | walk, start/stop | 0.94–1.03 | 0.92–1.08 | ±2 px | yes, ±5% | required |
-| `strike` | grounded attacks, wind-ups | 0.90–1.20 | 0.90–1.12 | ±2 px | skip (arm above head) | required |
+| `strike` | grounded attacks, wind-ups | 0.90–1.20 | 0.92–1.08 | ±2 px | skip (arm above head) | required |
 | `crouch` | crouch idle, crouched attack | crouch height ±5% | 0.80–1.00 | ±2 px | yes, ±5% **of standing** | — |
 | `transition` | crouch enter/exit, land, takeoff | crouch −5% … design +3% | 0.80–1.08 | ±2 px | yes, ±5% of standing | — |
-| `air` | rise, apex, fall, air attack | 0.70–1.15 | 0.88–1.12 | lowest ink on pivot ±2 px | skip | — |
+| `air` | rise, apex, fall, air attack | 0.70–1.15 | 0.90–1.10 | lowest ink on pivot ±2 px | skip | — |
 | `impact` | knockback, knockdown, get-up | 0.25–1.05 | 0.85–1.12 | ±2 px | skip | — |
 | `collapse` | death up to the final settle | 0.15–1.05 | 0.70–1.12 | ±2 px | skip | — |
 | `dissolve` | ash and settle frames at the end of a death | no band | no band | ±6 px | skip | — |
@@ -88,8 +88,8 @@ Each rule prints its ID on failure. A **DEFECT** blocks approval; a **FLAG** goe
 
 | ID | Rule | Severity |
 |---|---|---|
-| A-11 | No pop: between adjacent frames of the same pose class, S changes by ≤ 6% and height by ≤ 12% | FLAG (reviewer adjudicates against the onion-skin sheet) |
-| A-12 | One character, one size: across all clips, frames of the same class agree on S within the class band. This is DA-1 checked per frame, not per clip median | DEFECT |
+| A-11 | No pop: between adjacent frames of the same pose class, S changes by ≤ 6%; in steady classes (`stand`, `stride`, `crouch`, `creature`) height also changes by ≤ 12%. Transitions, impacts and collapses change height by design, so only their size is watched | FLAG (reviewer adjudicates against the onion-skin sheet) |
+| A-12 | One character, one size: each clip's median S is within 6% of the actor's median S for the same pose class across all clips (clips with a declared size override, such as folded wings, are judged by their own band instead). Combined with A-06 (every frame against the reference), this catches both a whole sheet drawn at the wrong scale and single frames that stray (DA-1, DA-8) | DEFECT for `stand`, `stride`, `crouch`; FLAG for other classes |
 | A-13 | Loop seam: in looping clips, last → first frame obeys A-11 | FLAG |
 | A-14 | Frame count, per-frame durations and loop flag equal the contract | DEFECT |
 | A-15 | Every gameplay state maps to an existing clip, and every clip is reachable from some state (GAMEPLAY_RULES §4 / §8). Checked in engine (VALIDATION V3) | DEFECT |
@@ -151,7 +151,8 @@ Numbers are tripwires; looking is the acceptance. Because no human approves art 
 
 A check is accepted only once it has been seen failing on the defect it targets.
 
-- `tools/selftest.mjs` builds a synthetic actor, generates a correct clip set plus one broken variant per defect class (torso-only, shrunken crouch, per-frame size drift, debris, canvas clipping, opaque background, leftover key colour, floating feet, detached whip, oversized coil, whip reach short, effect with a rectangle edge, popping effect). It asserts that the audit passes the correct set and reports the expected rule ID on each broken one. It runs in seconds and must pass before any art is audited.
+- `tools/selftest.mjs` builds a synthetic actor, generates a correct clip set plus one broken variant per defect class (torso-only, shrunken crouch, per-frame size drift, debris, canvas clipping, opaque background, leftover key colour, floating feet, detached whip, oversized coil, whip reach short, effect with a rectangle edge, popping effect). It asserts that the audit passes the correct set and reports the expected rule ID on each broken one. It takes about 40 s and must pass before any art is audited.
+- The self-test also documents a limit: a torso whose hands hang below the belt looks like two feet to the lower-body proxy (A-07). The head rule (A-08) still catches it, which is why no single anatomy proxy is trusted alone, and why the blind description in §9 is required.
 - When production finds a new defect class, add a fixture for it first and watch the audit fail on it; only then fix the art. Re-run the audit on the archived pre-fix frames (G-06): it must fail there and pass on the fix.
 
 ## 11. Allowed derivations (D23)

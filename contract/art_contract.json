@@ -17,6 +17,9 @@
     "head_tol": 0.05,
     "pop_size": 0.06,
     "pop_height": 0.12,
+    "pop_height_classes": ["stand", "stride", "crouch", "creature"],
+    "clip_consistency": 0.06,
+    "clip_consistency_strict_classes": ["stand", "stride", "crouch"],
     "cloth_below_pivot_flag_px": 6,
     "normalise_scale_range": [0.85, 1.18]
   },
@@ -24,11 +27,11 @@
   "pose_classes": {
     "stand":        { "height_ref": "design", "height": [0.97, 1.03], "size": [0.92, 1.08], "foot_tol_px": 2, "head": true,  "lower_body": true },
     "stride":       { "height_ref": "design", "height": [0.94, 1.03], "size": [0.92, 1.08], "foot_tol_px": 2, "head": true,  "lower_body": true },
-    "strike":       { "height_ref": "design", "height": [0.90, 1.20], "size": [0.90, 1.12], "foot_tol_px": 2, "head": false, "lower_body": true },
+    "strike":       { "height_ref": "design", "height": [0.90, 1.20], "size": [0.92, 1.08], "foot_tol_px": 2, "head": false, "lower_body": true },
     "crouch":       { "height_ref": "crouch", "height": [0.95, 1.05], "size": [0.80, 1.00], "foot_tol_px": 2, "head": true,  "lower_body": false },
     "crouch_strike":{ "height_ref": "crouch", "height": [0.90, 1.20], "size": [0.80, 1.05], "foot_tol_px": 2, "head": false, "lower_body": false },
     "transition":   { "height_ref": "range",  "height": ["crouch*0.95", "design*1.03"], "size": [0.80, 1.08], "foot_tol_px": 2, "head": true, "lower_body": false },
-    "air":          { "height_ref": "design", "height": [0.70, 1.15], "size": [0.88, 1.12], "foot_tol_px": 2, "head": false, "lower_body": false },
+    "air":          { "height_ref": "design", "height": [0.70, 1.15], "size": [0.90, 1.10], "foot_tol_px": 2, "head": false, "lower_body": false },
     "impact":       { "height_ref": "design", "height": [0.25, 1.05], "size": [0.85, 1.12], "foot_tol_px": 2, "head": false, "lower_body": false },
     "collapse":     { "height_ref": "design", "height": [0.15, 1.05], "size": [0.70, 1.12], "foot_tol_px": 2, "head": false, "lower_body": false },
     "dissolve":     { "height_ref": null,     "height": null,         "size": null,         "foot_tol_px": 6, "head": false, "lower_body": false },
@@ -37,10 +40,10 @@
 
   "actors": {
     "hero":    { "canvas": [512, 512], "pivot": [256, 448], "align": "feet",   "design_height": 224, "crouch_height": 140, "head_ratio": [0.14, 0.20], "has_legs": true,  "reference": { "clip": "style_hero_neutral", "class": "stand" } },
-    "pursuer": { "canvas": [320, 192], "pivot": [128, 160], "align": "feet",   "design_height": 112, "head_ratio": null, "has_legs": true,  "reference": { "clip": "pursuer_patrol_walk", "class": "creature" } },
+    "pursuer": { "canvas": [320, 256], "pivot": [128, 224], "align": "feet",   "design_height": 112, "head_ratio": null, "has_legs": true,  "reference": { "clip": "pursuer_patrol_walk", "class": "creature" } },
     "swooper": { "canvas": [384, 256], "pivot": [192, 128], "align": "centre", "design_height": 170, "head_ratio": null, "has_legs": false, "reference": { "clip": "swooper_cruise", "class": "creature" } },
     "ranged":  { "canvas": [256, 352], "pivot": [128, 320], "align": "feet",   "design_height": 300, "head_ratio": null, "has_legs": false, "reference": { "clip": "ranged_idle", "class": "creature" } },
-    "boss":    { "canvas": [512, 512], "pivot": [176, 448], "align": "feet",   "design_height": 352, "head_ratio": [0.12, 0.22], "has_legs": true,  "reference": { "clip": "boss_walk", "class": "stride" } }
+    "boss":    { "canvas": [512, 576], "pivot": [176, 512], "align": "feet",   "design_height": 352, "head_ratio": [0.12, 0.22], "has_legs": true,  "reference": { "clip": "boss_walk", "class": "stride" } }
   },
 
   "clips": {
@@ -84,16 +87,16 @@
 
     "swooper_perch_idle":   { "actor": "swooper", "ms": [150,150,150,150,150,150], "loop": true, "pose": "creature", "height": [0.60, 1.20] },
     "swooper_cruise":       { "actor": "swooper", "ms": [90,90,90,90,90,90,90,90], "loop": true, "pose": "creature", "height": [0.60, 1.20], "note": "wingbeat changes the envelope; size is the stable measure" },
-    "swooper_dive_telegraph":{"actor": "swooper", "ms": [150,150,150,150], "loop": false, "pose": "creature", "height": [0.50, 1.60], "size": [0.60, 1.12], "note": "wing fold: wide cross to narrow dart; folded wings show less area" },
+    "swooper_dive_telegraph":{"actor": "swooper", "ms": [150,150,150,150], "loop": false, "pose": "creature", "height": [0.50, 1.45], "size": [0.60, 1.12], "note": "wing fold: wide cross to narrow dart; folded wings show less area" },
     "swooper_dive":         { "actor": "swooper", "ms": [60,60,60,60], "loop": false, "pose": "creature", "height": [0.40, 1.20], "size": [0.60, 1.12] },
     "swooper_recovery_climb":{"actor": "swooper", "ms": [150,150,150,150,150,150], "loop": false, "pose": "creature", "height": [0.60, 1.30] },
     "swooper_hurt":         { "actor": "swooper", "ms": [60,60,60], "loop": false, "pose": "creature", "height": [0.50, 1.30] },
     "swooper_death_fall":   { "actor": "swooper", "ms": [70,70,70,70,70], "loop": false, "pose": ["collapse","collapse","collapse","dissolve","dissolve"] },
 
     "ranged_idle":          { "actor": "ranged", "ms": [150,150,150,150,150,150], "loop": true, "pose": "creature", "height": [0.95, 1.05] },
-    "ranged_aim":           { "actor": "ranged", "ms": [150,150,150,150,150,150], "loop": false, "pose": "creature", "height": [0.95, 1.10] },
-    "ranged_fire":          { "actor": "ranged", "ms": [50,50,100], "loop": false, "pose": "creature", "height": [0.95, 1.10] },
-    "ranged_recover":       { "actor": "ranged", "ms": [100,100,100,100,100,100,100], "loop": false, "pose": "creature", "height": [0.90, 1.10] },
+    "ranged_aim":           { "actor": "ranged", "ms": [150,150,150,150,150,150], "loop": false, "pose": "creature", "height": [0.95, 1.05], "note": "aims level with one long arm; the hood stays the top of the silhouette" },
+    "ranged_fire":          { "actor": "ranged", "ms": [50,50,100], "loop": false, "pose": "creature", "height": [0.95, 1.05] },
+    "ranged_recover":       { "actor": "ranged", "ms": [100,100,100,100,100,100,100], "loop": false, "pose": "creature", "height": [0.90, 1.05] },
     "ranged_hurt":          { "actor": "ranged", "ms": [60,60,60], "loop": false, "pose": "creature", "height": [0.85, 1.05] },
     "ranged_death":         { "actor": "ranged", "ms": [80,80,80,80,80,80], "loop": false, "pose": ["collapse","collapse","collapse","collapse","dissolve","dissolve"] },
 
