@@ -104,6 +104,18 @@ Standing clearance = at least 104 u of free height above the foot origin (the st
 6. **Moving into a low ceiling while standing** is ordinary collision blocking (the 104 u body doesn't fit); the hunter must crouch *before* the passage. There is no auto-crouch and no crouch-walk, so a low passage is traversed only if its far side is reachable stationary-crouched or by level design — P4 stage design owns passage placement.
 7. **Landing with crouch held** → `land` plays, then `crouch_enter` (§4).
 
+### 6.1 Platforms, clearance and the no-trap rule (added 2026-10-12)
+
+The first implementation shipped a permanent soft-lock: crouching under a thin one-way tread left the hunter unable to stand, jump or move, because the clearance check counted the one-way slab as a ceiling ([LESSONS.md](LESSONS.md) L12). It also never switched to the crouch body on ordinary crouch entry (L13). These rules close both.
+
+1. **Platform kinds.** Every surface in level data is either `solid` (blocks from all sides) or `one_way` (blocks only from above, while falling onto it). Solid is the default. STAGE_DESIGN names every one-way surface explicitly; a surface it does not name is solid.
+2. **One-way surfaces never count as ceilings.** The standing-clearance query (§6), the jump-from-crouch check (§6 case 3) and any head-bump test ignore `one_way` surfaces. Only `solid` geometry can deny standing.
+3. **Crouch body on every entry.** The 40×60 crouch body is active from the first frame of `crouch_enter` on every path into crouch: pressing crouch, landing with crouch held (§6 case 7), and the air-attack landing continuation. Leaving crouch restores 40×104 only when clearance exists.
+4. **No-trap rule.** From every position the hunter can reach, some input sequence moves the hunter at least 64 u or reaches the checkpoint/exit, without taking damage. A space whose clearance is between the crouch body (60 u) and the standing body (104 u) must therefore be unreachable, or have an exit the crouched, stationary hunter can use. There is no crouch-walk, so such a space is almost always a trap; level data should not create one.
+5. **Measured motion tolerance.** Engine integration overshoots the analytic jump slightly (the first build measured a 133.4 u rise against 128 u). Tests accept ±6% on jump rise and travel; level geometry still uses the conservative limits of SPEC §4, never the measured overshoot.
+
+The tests for these rules are listed in [VALIDATION.md](VALIDATION.md) "Rule-to-test traceability" (T-01…T-04).
+
 ## 7. Failure, checkpoint, retry, completion
 
 - **Pit fall.** Crossing the stage kill plane: `fall` continues, then a visible fade/death transition (ANIMATION_SPEC: no ground-collapse clip on a nonexistent floor) → restart at the current respawn point. A pit is not damage — it bypasses invulnerability and costs no health before the restart.

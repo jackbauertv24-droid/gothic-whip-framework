@@ -1,5 +1,7 @@
 # Follow-on specification work
 
+**Status 2026-10-12:** P0–P6 are drafted (imported from the askjackb completion pass and corrected), and the art contract (ART_CONTRACT.md, `contract/`, `tools/`) is added on top. The next useful work is a second implementation run from [prompts/BUILD.md](../prompts/BUILD.md), with every defect it finds fed back into LESSONS.md and a self-test case.
+
 These are handoff boundaries, not an instruction to spawn agents or start implementation. Each package can be assigned independently once its dependencies are met. Use the decision template for changes to shared contracts.
 
 | Package | Inputs / dependencies | Deliverable | Completion criterion |

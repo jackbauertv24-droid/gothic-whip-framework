@@ -197,7 +197,7 @@ Briefed per ASSET_SPEC §5: timing, bounds, anchor, compositing. No flashing as 
 | `vfx_checkpoint_activate` | 256×384 | 8 × 90 ms (720) [P3] | `prop_checkpoint` base | Checkpoint capture moment |
 | `vfx_hazard_telegraph` | 320×128 | 4 × 300 ms (1200) | floor zone; sync `boss_hazard_windup`, zone 160 u wide (GAMEPLAY_RULES §8.4) | Ember Bright cracked ring |
 | `vfx_hazard_eruption` | 320×192 | 6 × [60,60,70,70,70,70] (400) | floor zone; sync `boss_hazard_execute` | Eruption ≤46 u tall |
-| `vfx_damage_indicator` | 128×128 | 2 × 150 ms (300) [P3] | screen-space edge element | Pairs with the hunter's Bone-white tint; steady, non-strobing |
+| `vfx_damage_indicator` | **engine-drawn**, no art file | 2 × 150 ms (300) [P3] | screen-space edge element | Pairs with the hunter's Bone-white tint; steady, non-strobing. Drawn in engine code (ART_CONTRACT V-04): the first implementation generated it as a full-screen vignette, chroma keying made it fully transparent, and the damage flash never rendered |
 
 Rejection: telegraph readable only by color (shape must carry it); strobing above the SPEC §5 comfort line; VFX obscuring the landing or tell it accompanies.
 

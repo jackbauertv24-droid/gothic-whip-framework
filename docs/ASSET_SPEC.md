@@ -60,6 +60,8 @@ Each manifest must include ID, state (`candidate`, `approved`, `rejected`), revi
 
 ## 7. Quality gate
 
+**Since 2026-10-12 the measurable gate is [ART_CONTRACT.md](ART_CONTRACT.md)**, run by `tools/audit-art.mjs` and confirmed by the independent reviewer (ART_CONTRACT §9). The order below still describes what is checked; the contract says how, with which tolerances, and what a failure blocks.
+
 Check in order: technical dimensions/alpha → identity and scale → frame alignment/temporal consistency → attack socket/hitbox sync → tiling/seams → phone-size readability → future engine import and mobile budget. Failure at any stage keeps the asset out of `approved`.
 
 A contact sheet alone cannot prove animation quality. Require timed playback, an origin/socket overlay, dark and light alpha-edge previews, the actual-scale scene, and a recorded reviewer verdict. Tool-produced claims of transparency or frame count are not verification. Never conceal a defective frame with interpolation, aggressive blur, or frame-by-frame stretching.

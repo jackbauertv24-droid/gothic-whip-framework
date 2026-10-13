@@ -57,7 +57,7 @@ Touch targets: at least 48 CSS pixels equivalent after viewport scaling, initial
 
 No full Konami/Nintendo roster, character swapping, multiple worlds, exploration ability gates, campaign, narrative cutscenes, crafting, upgrades, multiplayer, backend, ads, monetization, procedural levels, or finished Android release in the first slice. They are outside the proposed baseline, not promised future work.
 
-This repository itself ships **only planning documents, prompts, templates, and acceptance criteria**. No first playable is being built now.
+This repository ships **planning documents, prompts, templates, acceptance criteria, a machine-readable art contract and the reference tools that check it** (D24). Game code, art and builds live in a separate implementation repository ([prompts/BUILD.md](prompts/BUILD.md)).
 
 ## 8. Success criteria and stop conditions
 

@@ -163,3 +163,24 @@ Unchanged from every prior entry: no engine project, export, art, animation, pla
 
 - User ratifications R1–R3 (READINESS_REVIEW §4); D09 remains the only open interview question.
 - The specification phase is complete on paper: P0–P6 delivered, AUDIT B1–B12 dispositioned, VALIDATION V0's document-side evidence assembled in READINESS_REVIEW §§1–2. The next step belongs to a future explicit implementation assignment (WORK_PACKAGES production gates 1–5), starting with locking the engine version and the proposed mechanics, then a greybox touch movement + whip test on iPhone 17 hardware.
+
+---
+
+# Follow-up review — art contract and lessons from the first implementation
+
+Date: 2026-10-12. Scope: documents, `contract/art_contract.json`, `tools/`. Trigger: the user reviewed the first implementation (askjackb/gothic-whip-game, built autonomously 2026-10-08/09 from the drafts imported here) and its five rounds of user-found sprite defects, and asked for a specification concrete enough for autonomous full-quality builds. Decisions D20–D25 recorded from a scope interview the same day.
+
+## Completed checks (all actually run)
+
+- `node tools/contract-check.mjs`: PASS, 64 clips / 356 frames, 64 ASSET_BRIEFS rows cross-checked. Shown failing on two seeded mismatches (a changed walk duration in the JSON; a wrong stated total in the briefs).
+- The check found four real specification defects on its first runs, all fixed: the ranged canvas (256×320, pivot 288) could not hold its 300 px figure; the pursuer canvas could not hold its rear-up tell; the boss canvas could not hold its wind-up; two ranged/swooper height bands were looser than their designs. The first three are exactly the clipping the first implementation shipped. TEXTURE_BUDGET re-run after the canvas changes: all page readings unchanged (8 / 7 / 6).
+- `node tools/selftest.mjs`: PASS. A synthetic correct frame set for every clip audits with 0 DEFECT (also after a PNG round trip on disk), and 25 seeded defects are each reported by the rule aimed at them. Runtime about 40 s.
+- `node tools/review-pack.mjs` on the synthetic set: 135 images; lineup and composite sheets inspected by eye (guides, sockets and hitboxes land where expected).
+- All 172 relative Markdown links resolve; every JSON file parses.
+
+## Explicitly not tested
+
+- The tools have never been run on real painted art. Their thresholds come from the first implementation's audits, which were calibrated on that art set; the next build is the first real test, and every FLAG/DEFECT pattern it produces should be compared against what a reviewer sees.
+- The independent-reviewer protocol (prompts/ART_REVIEW.md) has not been exercised on a real pack.
+- Gameplay tests T-01…T-09 are specified, not implemented (they belong to a build).
+- No engine, device or browser work was done.

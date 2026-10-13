@@ -63,6 +63,8 @@ Every on-screen creature has complete locomotion/idle, attack anticipation, exec
 
 ## Required proof of completeness
 
+Measured acceptance for every clip is [ART_CONTRACT.md](ART_CONTRACT.md): pose classes, per-frame size and anatomy rules, whip and effect rules, the review pack and the independent reviewer. The crouch design height is 140 px (0.625 × standing, ART_CONTRACT §2). The proof items below are produced by `tools/review-pack.mjs` plus engine captures.
+
 Provide a state inventory mapping each gameplay action to clip IDs and all transition paths, a timed reel of every clip, actual-scale composite body+weapon previews, and a future in-engine recording showing each action triggered. Mark missing evidence NOT-TESTED. Review smoothness at intended playback speed and at phone display size, not just as thumbnails.
 
 Reject static-picture motion; missing crouch/stand or takeoff/landing coverage; one generic pose for jump/fall/hurt; costume drift; collapsing anatomy; disconnected whip; skating feet; knockback implemented only by translation; instantaneous death disappearance; and complete clips that the actual state machine can never play.

@@ -69,7 +69,17 @@ Failure handling: a missed target is recorded with its evidence and returns to t
 
 Not part of this phase; recorded so the later package starts from a list, not from memory. Prerequisites when D16 activates: JDK and Android SDK components at the versions the pinned engine's official Android export documentation requires (recorded then, not guessed now); the same 4.7.2 export templates (or a deliberate re-pin); a registered package identifier (reverse-DNS, chosen at activation; any value used earlier is a placeholder); arm64 as the primary architecture; a debug keystore for install testing and a release signing key held **outside** this repository (signing keys are never committed — TECHNICAL_CONSTRAINTS); then the V9 debug-install + touch/resume test on real hardware. The web build's input layer (§2) is the only APK-facing design commitment in this phase.
 
-## 7. Risks and open items
+## 7. Pipeline rules learned in production (2026-10-12)
+
+From the first implementation ([LESSONS.md](LESSONS.md) L15–L17):
+
+- After repacking atlas PNGs, run `godot --headless --path <project> --import` before any test or capture. Otherwise the engine samples its previous import cache at the new region coordinates and draws the wrong sprite (the whip once drew a swooper wing).
+- After packing, decode each atlas page and compare every packed region pixel-for-pixel with its source frame, so packing cannot silently swap, crop or shift a frame.
+- Step every clip frame by frame through the real animation player in a headless test (VALIDATION V3); fast motions such as the 500 ms whip cannot be judged from browser screenshots, which took about 1.3 s each in headless Chromium.
+- When publishing a web build, download the deployed `.pck` and compare its checksum with the local export, so the build you tested is the build people play.
+- Desktop Chromium evidence (including software-rendered WebGL) is never reported as device evidence; iPhone 17 gates stay PENDING until run on the device.
+
+## 8. Risks and open items
 
 - iOS Safari WebGL2/Compatibility behavior, texture-memory limits, and audio latency on M1 are all unverified until device runs exist; the single-threaded baseline is chosen to minimize, not eliminate, that risk.
 - The mip/residency question (TEXTURE_BUDGET §5 amendment) and this document's import settings are one decision seen from two sides; P6 must ratify or reject them together.

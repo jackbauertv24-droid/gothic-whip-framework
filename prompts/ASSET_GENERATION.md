@@ -4,12 +4,14 @@ This is an instruction template, not authorization to start generating assets du
 
 ## Workflow
 
+The generation and extraction requirements G-01…G-06 of [ART_CONTRACT.md](../docs/ART_CONTRACT.md) §8 are mandatory and override anything looser below. In short: every request carries the identity reference **and** a guide image (contract canvas, ground line, pivot, design and crouch height lines); prompts say "full body, top of head to soles of boots, feet on the ground line"; key colour magenta `#FF00FF` (never green for enemies); normalise per frame within 0.85–1.18 or regenerate; screen-space effects are drawn in engine code; keep every rejected frame. Run `node tools/selftest.mjs` once, then `tools/audit-art.mjs` after every batch, and stop a batch at the first DEFECT class rather than generating more.
+
 1. Read the approved style-lock reference, ASSET_SPEC.md, and the individual asset brief. List missing inputs. Do not start a production batch when canvas, pivot, identity, or state/timing is unresolved.
 2. Establish a reference pose at exact intended relative scale. Generate small candidates for art-direction review; label them concepts rather than runtime assets.
 3. Once the reference is accepted, use reference-based editing/conditioning to derive a small number of key poses. Preserve costume, anatomy, perspective, palette, and light. Generate animation clips separately, using neighboring poses as references when supported.
 4. Review silhouettes and key poses before in-betweens. Request specific corrections instead of regenerating a complete sheet repeatedly. If the generator cannot maintain temporal consistency, propose a separately authorized manual cleanup or rigged workflow; do not call inconsistent frames production-ready.
 5. Assemble and normalize deliveries with deterministic tools after generation. Validate dimensions and actual alpha. Record every crop, padding, resize, and pivot adjustment. Avoid resampling repeatedly. A painted checkerboard is not transparency.
-6. Produce timed animation playback, contact sheets, socket/pivot overlays, and a scene mockup at logical and phone display sizes. Compare against the acceptance checklist.
+6. Run `node tools/audit-art.mjs --frames <root>` (0 DEFECT required), then `node tools/review-pack.mjs --frames <root>` and hand the pack to a fresh reviewer with [ART_REVIEW.md](ART_REVIEW.md). Also capture in-engine shots at phone display size.
 7. Write a manifest and verdict. Keep rejected candidates traceable. Promote only reviewed assets and preserve the exact prompt/references used.
 
 ## Master visual prompt

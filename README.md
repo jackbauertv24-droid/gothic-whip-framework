@@ -1,8 +1,10 @@
-# Gothic Whip — scope and asset framework
+# Gothic Whip — specification
 
-A planning repository for a **2D gothic horror platformer starring an original hunter in an original gothic world, with whip-led combat and restrained jumping**, made in Godot for mobile browser play, with Android APK support planned later. Castlevania is the design reference for tone and mechanics only.
+A specification repository for a **2D gothic horror platformer starring an original hunter in an original gothic world, with whip-led combat and restrained jumping**, made in Godot for mobile browser play, with Android APK support planned later. Castlevania is the design reference for tone and mechanics only.
 
-**Status: specification handoff, not an implemented game.** No engine project, generated art, or playable build is included. “Gothic Whip” is a working repository label, not an approved game title.
+**Goal:** concrete enough that a model can build the full-quality slice from it without a human reviewing the art (D20, D21). **Status:** specification complete on paper (packages P0–P6) with a measurable art contract, reference tools that check it, and lessons from one complete implementation ([askjackb/gothic-whip-game](https://github.com/askjackb/gothic-whip-game), see [docs/LESSONS.md](docs/LESSONS.md)). No engine project, art or build lives here. "Gothic Whip" is a working label, not an approved title.
+
+**To build the game:** use [prompts/BUILD.md](prompts/BUILD.md). **To check the contract:** `node tools/contract-check.mjs && node tools/selftest.mjs` (Node 20+, no install).
 
 ## Start here
 
@@ -14,7 +16,10 @@ A planning repository for a **2D gothic horror platformer starring an original h
 6. [Next-LLM prompt](prompts/NEXT_LLM.md): the exact task to begin with.
 7. [Full animation contract](docs/ANIMATION_SPEC.md): required states, transitions, and completeness gates.
 8. [Work packages](docs/WORK_PACKAGES.md): bounded follow-on specification tasks.
-9. [Technical constraints](docs/TECHNICAL_CONSTRAINTS.md) and [validation plan](docs/VALIDATION.md).
+9. [Technical constraints](docs/TECHNICAL_CONSTRAINTS.md), [technical spec](docs/TECHNICAL_SPEC.md) and [validation plan](docs/VALIDATION.md).
+10. [Gameplay rules](docs/GAMEPLAY_RULES.md), [stage design](docs/STAGE_DESIGN.md), [art bible](docs/ART_BIBLE.md), [asset briefs](docs/ASSET_BRIEFS.md), [texture budget](docs/TEXTURE_BUDGET.md).
+11. **[Art contract](docs/ART_CONTRACT.md)**: measurable acceptance for every frame, the independent reviewer gate, and why each rule exists. Machine-readable form: [contract/art_contract.json](contract/art_contract.json). Tools: [tools/](tools/README.md). Reviewer prompt: [prompts/ART_REVIEW.md](prompts/ART_REVIEW.md).
+12. [Lessons from the first implementation](docs/LESSONS.md).
 
 Use [the asset brief](templates/ASSET_BRIEF.md), [manifest example](templates/asset-manifest.example.json), and [decision template](templates/DECISION.md) when filling gaps.
 
